@@ -488,62 +488,66 @@ Public Class Form1
                     End If
                 End If
             End If
-        End If
-        If e.Channel.Id = 364574672995614721 Then '#comandos
-            If e.Message.Content.ToLower().Contains("!vp") Then
-                Dim VP As Double = GetResultFromSteemPlaceAPI(User, "vp")
-                If IsUserInDiscord Then
-                    Await e.Channel.SendMessageAsync(UserInDiscord.Mention & ", tu poder de voto es " & VP & "% :slight_smile: ")
-                Else
-                    Await e.Channel.SendMessageAsync("@" & User & ", tu poder de voto es " & VP & "% :slight_smile: ")
+            If e.Channel.Id = 364574672995614721 Then '#comandos
+                If e.Message.Content.ToLower().Contains("!vp") Then
+                    Dim VP As Double = GetResultFromSteemPlaceAPI(User, "vp")
+                    If IsUserInDiscord Then
+                        Await e.Channel.SendMessageAsync(UserInDiscord.Mention & ", tu poder de voto es " & VP & "% :slight_smile: ")
+                    Else
+                        Await e.Channel.SendMessageAsync("@" & User & ", tu poder de voto es " & VP & "% :slight_smile: ")
+                    End If
+                End If
+            ElseIf e.Channel.Id = 406968370886344706 Then
+                If e.Message.Content.ToLower().Contains("!valor") Then
+                    Dim Reply As String = String.Empty
+                    Dim SplitWords As String() = e.Message.Content.Split(" ")
+                    If SplitWords.Count >= 2 Then
+                        Dim i = 0
+                        For Each word In SplitWords
+                            If word = "!valor" Then
+                                Reply = GetOrCalculatePrice(SplitWords(i + 1))
+                            End If
+                            i = i + 1
+                        Next
+                        Await e.Channel.SendMessageAsync(Reply)
+                    Else
+                        Reply = GetOrCalculatePrice("steem", "USD")
+                        Await e.Channel.SendMessageAsync(Reply)
+                    End If
+                ElseIf e.Message.Content.ToLower().Contains("!calcular") Then
+                    Dim Reply As String = String.Empty
+                    Dim SplitWords As String() = e.Message.Content.Split(" ")
+                    If SplitWords.Count >= 2 Then
+                        Dim i = 0
+                        For Each word In SplitWords
+                            If word = "!calcular" Then
+                                Reply = GetOrCalculatePrice(SplitWords(i + 2), SplitWords(i + 1))
+                            End If
+                            i = i + 1
+                        Next
+                        Await e.Channel.SendMessageAsync(Reply)
+                    Else
+                        Reply = GetOrCalculatePrice("steem", "USD")
+                        Await e.Channel.SendMessageAsync(Reply)
+                    End If
                 End If
             End If
-        ElseIf e.Channel.Id = 406968370886344706 Then
-            If e.Message.Content.ToLower().Contains("!valor") Then
-                Dim Reply As String = String.Empty
-                Dim SplitWords As String() = e.Message.Content.Split(" ")
-                If SplitWords.Count >= 2 Then
-                    Dim i = 0
-                    For Each word In SplitWords
-                        If word = "!valor" Then
-                            Reply = GetOrCalculatePrice(SplitWords(i + 1))
-                        End If
-                        i = i + 1
-                    Next
-                    Await e.Channel.SendMessageAsync(Reply)
-                Else
-                    Reply = GetOrCalculatePrice("steem", "USD")
-                    Await e.Channel.SendMessageAsync(Reply)
-                End If
-            ElseIf e.Message.Content.ToLower().Contains("!calcular") Then
-                Dim Reply As String = String.Empty
-                Dim SplitWords As String() = e.Message.Content.Split(" ")
-                If SplitWords.Count >= 2 Then
-                    Dim i = 0
-                    For Each word In SplitWords
-                        If word = "!calcular" Then
-                            Reply = GetOrCalculatePrice(SplitWords(i + 2), SplitWords(i + 1))
-                        End If
-                        i = i + 1
-                    Next
-                    Await e.Channel.SendMessageAsync(Reply)
-                Else
-                    Reply = GetOrCalculatePrice("steem", "USD")
-                    Await e.Channel.SendMessageAsync(Reply)
-                End If
-            End If
-        End If
-        If e.Channel.Id = 356473187501867018 = False And e.Channel.Id = 380928843583717376 = False And e.Channel.Id = 368568796216295434 = False Then
-            If e.Message.Content.Contains("steemit.com/") Or e.Message.Content.Contains("busy.org/") Or e.Message.Content.Contains("utopian.io/") Then
-                Dim SplitWords As String() = e.Message.Content.Split("/")
-                If SplitWords.Count > 4 Then
-                    Dim Message As String = ":police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: " & vbCrLf &
-    ":warning: " & UserInDiscord.Mention & " ADVERTENCIA " & UserInDiscord.Mention & " :warning:" & vbCrLf &
-    ":rotating_light: Mensaje con post detectado :rotating_light:" & vbCrLf &
-    ":rotating_light: En este canal, no se permiten posts. Los posts salen automáticamente en el canal #nuevos-posts cuando tú lo publicas en steemit :rotating_light:" & vbCrLf &
-    ":police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: " & vbCrLf &
-    ":warning: Por favor, escribe para confirmar que viste la advertencia :warning: Infracciones múltiples resultarán en tu expulsión de este servidor."
-                    Await e.Channel.SendMessageAsync(Message)
+            '368568796216295434 = #nuevos-posts
+            '384876428065374210 = #premios-oiza
+            '405907266663874562 = #trail
+            '407348378570194947 = #verificar-posts
+            If e.Channel.Id = 368568796216295434 = False And e.Channel.Id = 405907266663874562 And e.Channel.Id = 407348378570194947 And e.Channel.Id = 384876428065374210 Then
+                If e.Message.Content.Contains("steemit.com/") Or e.Message.Content.Contains("busy.org/") Or e.Message.Content.Contains("utopian.io/") Then
+                    Dim SplitWords As String() = e.Message.Content.Split("/")
+                    If SplitWords.Count > 4 Then
+                        Dim Message As String = ":police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: " & vbCrLf &
+        ":warning: " & UserInDiscord.Mention & " ADVERTENCIA " & UserInDiscord.Mention & " :warning:" & vbCrLf &
+        ":rotating_light: Mensaje con post detectado :rotating_light:" & vbCrLf &
+        ":rotating_light: En este canal, no se permiten posts. Los posts salen automáticamente en el canal #nuevos-posts cuando tú lo publicas en steemit :rotating_light:" & vbCrLf &
+        ":police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: :police_car: :rotating_light: " & vbCrLf &
+        ":warning: Por favor, escribe para confirmar que viste la advertencia :warning: Infracciones múltiples resultarán en tu expulsión de este servidor."
+                        Await e.Channel.SendMessageAsync(Message)
+                    End If
                 End If
             End If
         End If
