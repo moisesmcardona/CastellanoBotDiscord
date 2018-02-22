@@ -536,7 +536,10 @@ Public Class Form1
             '384876428065374210 = #premios-oiza
             '405907266663874562 = #trail
             '407348378570194947 = #verificar-posts
-            If e.Channel.Id = 368568796216295434 = False And e.Channel.Id = 405907266663874562 = False And e.Channel.Id = 407348378570194947 = False And e.Channel.Id = 384876428065374210 = False Then
+            '369214082349268992 = #bienvenida
+            '368583801154306058 = #reportes
+            If e.Channel.Id = 368568796216295434 = False And e.Channel.Id = 405907266663874562 = False And e.Channel.Id = 407348378570194947 = False And e.Channel.Id = 384876428065374210 = False And e.Channel.Id = 369214082349268992 = False And e.Channel.Id = 368583801154306058 = False Then
+
                 If e.Message.Content.Contains("steemit.com/") Or e.Message.Content.Contains("busy.org/") Or e.Message.Content.Contains("utopian.io/") Then
                     Dim SplitWords As String() = e.Message.Content.Split("/")
                     If SplitWords.Count > 4 Then
