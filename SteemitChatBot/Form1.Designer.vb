@@ -76,7 +76,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Button1)
         Me.MaximizeBox = False
         Me.Name = "Form1"
-        Me.Text = "HispanoHablantes Discord Bot"
+        Me.Text = "Castellano Discord Bot"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
